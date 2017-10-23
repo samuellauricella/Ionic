@@ -9,6 +9,12 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { StoreModule } from "@ngrx/store";
+
+import {HttpModule} from "@angular/http";
+import {users} from "../store/users-reducer";
+import {selectedUser} from "../store/selected-user-reducer";
+import {UsersService} from "../services/users-service";
 
 @NgModule({
   declarations: [
@@ -18,7 +24,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TabsPage
   ],
   imports: [
+    HttpModule,
     BrowserModule,
+    StoreModule.forRoot({users, selectedUser}),
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -29,6 +37,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TabsPage
   ],
   providers: [
+    UsersService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
