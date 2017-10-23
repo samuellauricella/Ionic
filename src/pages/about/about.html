@@ -7,5 +7,34 @@
 </ion-header>
 
 <ion-content padding>
+  <ion-searchbar
+    (ionInput)="getItems($event)" >
+  </ion-searchbar>
+  <ion-item *ngIf="searchedUser">
+    <ion-avatar item-start>
+      <img src={{searchedUser.avatar_url}}>
+    </ion-avatar>
+    <h2>{{searchedUser.login}}</h2>
+  </ion-item>
+  <ion-item *ngIf="individualSelected && !searchedUser">
+    <ion-avatar item-start>
+      <img src={{individualSelected.avatar_url}}>
+    </ion-avatar>
+    <h2>{{individualSelected.login}}</h2>
+  </ion-item>
+
+  <ion-list *ngIf="!individualSelected && !searchedUser">
+    <ion-item
+      *ngFor="let user of (users | async)">
+      <ion-avatar item-start>
+        <img src={{user.avatar_url}}>
+      </ion-avatar>
+      <h2>{{user.login}}</h2>
+      <button ion-button color="light" item-end (click)="onClick(user.id, user.login)">Click</button>
+      <ion-card *ngIf="clicker && clickNumber==user.id" >
+      </ion-card>
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>
